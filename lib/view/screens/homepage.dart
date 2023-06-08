@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/auth_provider.dart';
@@ -12,21 +13,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final catList = [
-    'إضافة مال',
     'نقل أموال',
-    'حوالة محلية',
+    'إضافة مال',
     'حوالة دولية',
-    'دفع الفواتير',
+    'حوالة محلية',
     'إصدار فاتورة',
+    'دفع الفواتير',
   ];
 
   final catIcons = [
-    Icons.phone_iphone_outlined,
-    Icons.money,
-    Icons.phone_iphone_outlined,
-    Icons.money,
-    Icons.phone_iphone_outlined,
-    Icons.money,
+    FontAwesomeIcons.moneyBills,
+    FontAwesomeIcons.moneyBill,
+    FontAwesomeIcons.earthAsia,
+    FontAwesomeIcons.buildingColumns,
+    FontAwesomeIcons.sheetPlastic,
+    FontAwesomeIcons.mobile,
   ];
 
   @override
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Column(
                 children: [
@@ -143,29 +144,36 @@ class _HomePageState extends State<HomePage> {
                   crossAxisSpacing: 16.0,
                 ),
                 itemCount: catList.length,
-                itemBuilder: (ctx, index) => Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
-                    ),
+                itemBuilder: (ctx, index) => InkWell(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(
-                        catIcons[index],
-                        size: 46,
-                        color: Theme.of(context).colorScheme.primary,
+                  onTap: (){},
+                  child: Card(
+                    elevation: 5.0,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
                       ),
-                      Text(
-                        catList[index],
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 112, 112, 112),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FaIcon(
+                          catIcons[index],
+                          size: 46,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
-                      ),
-                    ],
+                        Text(
+                          catList[index],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 112, 112, 112),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
