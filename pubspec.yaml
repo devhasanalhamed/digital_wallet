@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.0.5
   dio: ^5.1.2
   http: ^0.13.6
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:
@@ -94,7 +95,7 @@ flutter:
     - family: Tajawal
       fonts:
         - asset: assets/fonts/tajawal/Tajawal-Regular.ttf
-        - asset: assets/fonts/tajawal/Tajawal-Bold.tff
+        - asset: assets/fonts/tajawal/Tajawal-Bold.ttf
           weight: 700
   #
   # For details regarding fonts from package dependencies,
