@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
                 secondary: Color.fromARGB(255, 0, 212, 112),
                 background: Color.fromARGB(255, 243, 243, 243),
               )),
-          // home: auth.isAuth ? HomePage() : const AuthScreen(),
-          home: const HomePage(),
+          home: auth.isAuth ? const HomePage() : const AuthScreen(),
+          // home: const HomePage(),
         ),
       ),
     );
