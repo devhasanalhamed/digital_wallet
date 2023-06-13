@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AuthProvider with ChangeNotifier {
+  var nationalIDAccepted = true;
   var _user = UserModel(
     phoneNumber: '',
     password: '',
@@ -36,6 +37,23 @@ class AuthProvider with ChangeNotifier {
         password: responseData['password'],
       );
     } catch (e) {
+      rethrow;
+    }
+    notifyListeners();
+  }
+
+  Future<void> testID(String id) async {
+    const url = 'http://10.0.2.2:8080/register';
+    try {
+      final response = await http.post(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(
+            {
+              'id': id,
+            },
+          ));
+      final responseData = response.body;
+    } catch (err) {
       rethrow;
     }
     notifyListeners();
