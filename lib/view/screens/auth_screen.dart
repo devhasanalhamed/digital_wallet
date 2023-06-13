@@ -13,8 +13,11 @@ class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
   var _login = true;
   var _loding = false;
-  String? _phoneNumber;
-  String? _password;
+  String? _loginPhoneNumber;
+  String? _loginPassword;
+  final _registerID = TextEditingController();
+  String? _registerPhoneNumber;
+  String? _registerPassword;
 
   void _onSave() {
     final weAreOkay = _formKey.currentState!.validate();
@@ -25,13 +28,16 @@ class _AuthScreenState extends State<AuthScreen> {
       });
       if (_login) {
         Provider.of<AuthProvider>(context, listen: false)
-            .authLogin(_phoneNumber, _password);
+            .authLogin(_loginPhoneNumber, _loginPassword);
       } else {}
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final nationalIDTextFormLocker =
+        Provider.of<AuthProvider>(context, listen: false).nationalIDAccepted;
+
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -115,7 +121,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             return null;
                           },
                           onSaved: (value) {
-                            _phoneNumber = value;
+                            _loginPhoneNumber = value;
                           },
                         ),
                         const SizedBox(height: 16.0),
@@ -135,7 +141,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             return null;
                           },
                           onSaved: (value) {
-                            _password = value;
+                            _loginPassword = value;
                           },
                         ),
                         const SizedBox(height: 16.0),
@@ -184,23 +190,63 @@ class _AuthScreenState extends State<AuthScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'National Number',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.person),
-                          ),
-                          keyboardType: TextInputType.number,
-                          maxLength: 10,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your National Number';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _phoneNumber = value;
-                          },
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'National Number',
+                                  border: const OutlineInputBorder(),
+                                  prefixIcon: const Icon(Icons.person),
+                                  suffix: IconButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.zero,
+                                    style: ButtonStyle(
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                    icon: const Icon(Icons.abc),
+                                  ),
+                                ),
+                                keyboardType: TextInputType.number,
+                                maxLength: 10,
+                                readOnly: nationalIDTextFormLocker,
+                                controller: _registerID,
+                                onChanged: (value) {
+                                  if (value.length == 10) {
+                                    print(_registerID.value.text);
+                                    Provider.of<AuthProvider>(context,
+                                            listen: false)
+                                        .testID('${_registerID.value.text}')
+                                        .onError((error, stackTrace) =>
+                                            print('id error'));
+                                  }
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please enter your National Number';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) {},
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                bottom: 25.0,
+                              ),
+                              width: 100,
+                              child: nationalIDTextFormLocker
+                                  ? const Icon(
+                                      Icons.check_circle,
+                                      color: Colors.green,
+                                    )
+                                  : const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 16.0),
                         TextFormField(
@@ -219,7 +265,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             return null;
                           },
                           onSaved: (value) {
-                            _password = value;
+                            _registerPhoneNumber = value;
                           },
                         ),
                         const SizedBox(height: 16.0),
@@ -238,7 +284,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             return null;
                           },
                           onSaved: (value) {
-                            _phoneNumber = value;
+                            _registerPassword = value;
                           },
                         ),
                       ],
