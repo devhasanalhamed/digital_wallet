@@ -15,6 +15,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var itemIndicator = 0;
   var pageIndicator = 0;
+
+  Future _bottomModalSheet(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      context: context,
+      builder: (ctx) => Container(
+        width: double.infinity,
+        height: screenSize.height,
+        decoration: const BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final pageCategory =
@@ -58,20 +83,24 @@ class _HomePageState extends State<HomePage> {
         }),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.phone),
-            label: 'Home',
+            icon: Icon(Icons.more_horiz),
+            label: 'المزيد',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'home',
+            icon: FaIcon(FontAwesomeIcons.store),
+            label: 'المتجر',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'home',
+            icon: FaIcon(FontAwesomeIcons.creditCard),
+            label: 'البطاقة',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.portable_wifi_off),
-            label: 'home',
+            icon: FaIcon(FontAwesomeIcons.wallet),
+            label: 'المحفظة',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.house),
+            label: 'الرئيسية',
           ),
         ],
       ),
@@ -195,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(12),
                                 ),
-                                onTap: () {},
+                                onTap: () => _bottomModalSheet(context),
                                 child: Card(
                                   elevation: 5.0,
                                   shape: const RoundedRectangleBorder(
@@ -293,19 +322,17 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             width: double.infinity,
                             height: 180,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.amber,
                             ),
-                            child: Text('card info'),
+                            child: const Text('card info'),
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5.0),
                           Container(
                             width: double.infinity,
                             height: 130,
                             color: Colors.green,
-                            child: Text('ads ads ads ads ads'),
+                            child: const Text('ads ads ads ads ads'),
                           ),
                         ],
                       ),
