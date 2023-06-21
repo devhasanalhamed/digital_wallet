@@ -1,6 +1,8 @@
 import 'package:digital_wallet/controller/app_structure_provider.dart';
 import 'package:digital_wallet/view/screens/auth_screen.dart';
 import 'package:digital_wallet/view/screens/homepage.dart';
+import 'package:digital_wallet/view/widgets/login_widget.dart';
+import 'package:digital_wallet/view/widgets/register_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +38,11 @@ class MyApp extends StatelessWidget {
                 background: Color.fromARGB(255, 243, 243, 243),
               )),
           home: auth.isAuth ? const HomePage() : const AuthScreen(),
-          // home: const HomePage(),
+          routes: {
+            AuthScreen.routeName: (ctx) => const AuthScreen(),
+            RegisterWidget.routeName: (ctx) => const RegisterWidget(),
+            LoginWidget.routeName: (ctx) => const LoginWidget(),
+          },
         ),
       ),
     );
