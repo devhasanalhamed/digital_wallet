@@ -5,14 +5,32 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AuthProvider with ChangeNotifier {
-  var nationalIDAccepted = true;
+  var _nationalIDAccepted = false;
+
+  bool get nationalIDAccepted {
+    if (_user.firstName.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   var _user = UserModel(
-    phoneNumber: '',
-    password: '',
-  );
+      firstName: '',
+      fatherName: '',
+      grandFatherName: '',
+      lastName: '',
+      phoneNumber: '',
+      password: '',
+      dateOfBirth: DateTime.now(),
+      jobTitle: '');
+
+  UserModel get user {
+    print(_user.phoneNumber);
+    return _user;
+  }
 
   bool get isAuth {
-    if (_user.phoneNumber.isNotEmpty) {
+    if (_user.password.isNotEmpty) {
       return true;
     }
     return false;
@@ -33,8 +51,14 @@ class AuthProvider with ChangeNotifier {
       );
       final responseData = jsonDecode(response.body);
       _user = UserModel(
+        firstName: _user.firstName,
+        fatherName: _user.fatherName,
+        grandFatherName: _user.grandFatherName,
+        lastName: _user.lastName,
         phoneNumber: responseData['phone_number'],
         password: responseData['password'],
+        dateOfBirth: _user.dateOfBirth,
+        jobTitle: _user.jobTitle,
       );
     } catch (e) {
       rethrow;
@@ -52,7 +76,19 @@ class AuthProvider with ChangeNotifier {
               'id': id,
             },
           ));
-      final responseData = response.body;
+      if (response.body.isNotEmpty) {
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        _user = UserModel(
+            firstName: responseData['first_name'],
+            fatherName: responseData['father_name'],
+            grandFatherName: responseData['grand_father'],
+            lastName: responseData['last_name'],
+            phoneNumber: responseData['phone_number'],
+            password: _user.password,
+            dateOfBirth: DateTime.parse(responseData['date_of_birth']),
+            jobTitle: responseData['job_title']);
+      }
     } catch (err) {
       rethrow;
     }
@@ -61,9 +97,14 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> logout() async {
     _user = UserModel(
-      phoneNumber: '',
-      password: '',
-    );
+        firstName: '',
+        fatherName: '',
+        grandFatherName: '',
+        lastName: '',
+        phoneNumber: '',
+        password: '',
+        dateOfBirth: null,
+        jobTitle: '');
     notifyListeners();
   }
 }
