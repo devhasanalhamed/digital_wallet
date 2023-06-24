@@ -1,5 +1,7 @@
+import 'package:digital_wallet/controller/auth_provider.dart';
 import 'package:digital_wallet/view/widgets/register_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginWidget extends StatefulWidget {
   static String routeName = 'login-widget';
@@ -12,27 +14,27 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget> {
   final _formKey = GlobalKey<FormState>();
   var _loding = false;
-  String? _loginPassword;
-
-  String? _loginPhoneNumber;
+  late String _loginPassword;
+  late String _loginPhoneNumber;
 
   @override
   Widget build(BuildContext context) {
-    void _onSave() {
+    void onSave() {
       final weAreOkay = _formKey.currentState!.validate();
       _formKey.currentState!.save();
       if (weAreOkay) {
         setState(() {
           _loding = true;
         });
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .authLogin(_loginPhoneNumber, _loginPassword);
+        Provider.of<AuthProvider>(context, listen: false)
+            .authLogin(_loginPhoneNumber, _loginPassword);
       }
     }
 
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
@@ -68,18 +70,13 @@ class _LoginWidgetState extends State<LoginWidget> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                top: 60.0,
-                left: 16.0,
-                bottom: 16.0,
-                right: 16.0,
-              ),
-              child: Center(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: SizedBox(
+                  width: double.infinity,
+                  height: screenSize.height * 0.5,
+                  child: ListView(
                     children: <Widget>[
                       TextFormField(
                         decoration: const InputDecoration(
@@ -101,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           return null;
                         },
                         onSaved: (value) {
-                          // _loginPhoneNumber = value;
+                          _loginPhoneNumber = value!;
                         },
                       ),
                       const SizedBox(height: 16.0),
@@ -124,7 +121,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           return null;
                         },
                         onSaved: (value) {
-                          // _loginPassword = value;
+                          _loginPassword = value!;
                         },
                       ),
                       const SizedBox(height: 16.0),
@@ -140,8 +137,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           TextButton(
                             onPressed: () {
                               setState(() {
-                                Navigator.of(context)
-                                    .pushNamed(RegisterWidget.routeName);
+                                Navigator.of(context).pushReplacementNamed(
+                                    RegisterWidget.routeName);
                               });
                             },
                             child: const Text(
@@ -184,10 +181,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                 fixedSize: Size(screenSize.width, 50.0),
                 backgroundColor: const Color.fromARGB(255, 0, 212, 112),
               ),
-              onPressed: () {},
               // onPressed: _onSave,
+              onPressed: onSave,
               child: _loding
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
                   : const Text(
                       'Login',
                       style: TextStyle(
