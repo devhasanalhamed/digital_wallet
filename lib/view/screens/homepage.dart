@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:digital_wallet/controller/app_structure_provider.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../controller/auth_provider.dart';
 
 class HomePage extends StatefulWidget {
+  static String routeName = 'home';
   const HomePage({super.key});
 
   @override
@@ -319,20 +323,225 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Column(
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: 180,
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
+                          FlipCard(
+                            front: Card(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              child: Stack(
+                                alignment: Alignment.centerRight,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(22.0),
+                                    width: double.infinity,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(1),
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(0.8),
+                                        ],
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(22.0),
+                                    width: 100,
+                                    height: 200,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(22.0),
+                                    width: double.infinity,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Image.asset(
+                                              'assets/images/visa.png',
+                                              width: 60.0,
+                                            ),
+                                            Image.asset(
+                                              'assets/images/EMVCo.png',
+                                              width: 18.0,
+                                            ),
+                                          ],
+                                        ),
+                                        const Text(
+                                          '1805\t\t1805\t\t1805\t\t1805',
+                                          style: TextStyle(
+                                            fontFamily: 'OCR',
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              'HASSAN\tALHAMED',
+                                              style: TextStyle(
+                                                fontFamily: 'OCR',
+                                                fontSize: 14.0,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Column(
+                                                  children: const [
+                                                    Text(
+                                                      'VALID\nTHRU',
+                                                      style: TextStyle(
+                                                        fontFamily: 'OCR',
+                                                        fontSize: 8.0,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(width: 5.0),
+                                                const Text(
+                                                  '12/26',
+                                                  style: TextStyle(
+                                                    fontFamily: 'OCR',
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: const Text('card info'),
+                            back: Card(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 22.0),
+                                width: double.infinity,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    width: 2.0,
+                                  ),
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: 45.0,
+                                      decoration: const BoxDecoration(
+                                          color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 10.0),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Container(
+                                          width: 200,
+                                          height: 30.0,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: const [
+                                            Text(
+                                              'CVV',
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 6.0),
+                                            Text(
+                                              '123',
+                                              style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 5.0),
-                          Container(
-                            width: double.infinity,
-                            height: 130,
-                            color: Colors.green,
-                            child: const Text('ads ads ads ads ads'),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'مساحة إعلانية مساحة إعلانية ',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
