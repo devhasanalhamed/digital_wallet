@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
               )),
           home: auth.isAuth ? const HomePage() : const AuthScreen(),
           routes: {
+            HomePage.routeName:(ctx) => const HomePage(),
             AuthScreen.routeName: (ctx) => const AuthScreen(),
             RegisterWidget.routeName: (ctx) => const RegisterWidget(),
             LoginWidget.routeName: (ctx) => const LoginWidget(),
